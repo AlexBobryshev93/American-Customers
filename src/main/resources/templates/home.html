@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <title>My Test Assignment</title>
+</head>
+
+<body>
+<form method="POST" th:action="@{/logout}">
+    <input type="submit" value="Log out"/>
+</form>
+<h2>Hello, <span sec:authentication="name"></span>!</h2>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Test Assignment</title>
+</head>
+
+<body>
+<h2>Please log in:</h2>
+<form method="POST" th:action="@{/login}">
+    <label>Username: </label>
+    <input type="text" name="username"/><br/>
+    <label>Password: </label>
+    <input type="password" name="password"/><br/><br/>
+    <input type="submit" value="Log in"/>
+</form>
+<h2>or click <a th:href="@{/register}">here</a> to create a new user</h2>
+</body>
+</html>
