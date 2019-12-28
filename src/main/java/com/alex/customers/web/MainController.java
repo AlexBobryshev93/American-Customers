@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/register")
-@SessionAttributes("user")
+//@SessionAttributes("user")
 public class MainController {
     private UserUSRepo userUSRepo;
     private UserCANRepo userCANRepo;
@@ -32,21 +32,35 @@ public class MainController {
         model.addAttribute("us", User.Country.USA);
         model.addAttribute("can", User.Country.CANADA);
         model.addAttribute("statesList", stateUSRepo.findAll());
+        model.addAttribute("provincesList", UserCAN.Province.values());
     }
 
     @GetMapping
     public String countryChoice() {
         return "country";
     }
-
+/*
     @GetMapping("/register/{country}")
-    public String createUser(@PathVariable String country, Model model) {
+    public String createUser(@PathVariable("country") String country, Model model) {
         if (country.equals("us")) model.addAttribute("user", new UserUS());
         else model.addAttribute("user", new UserCAN());
 
         return "register";
     }
+*/
 
+    @GetMapping("/register/us")
+    public String createUserUS(Model model) {
+        model.addAttribute("user", new UserUS());
+        return "register";
+    }
+
+    @GetMapping("/register/can")
+    public String createUserCAN(Model model) {
+        model.addAttribute("user", new UserCAN());
+        return "register";
+    }
+/*
     @PostMapping("/us")
     public String registerUserUS(@ModelAttribute UserUS user, Model model) {
         if (!user.getPassword().equals(user.getConfirmPassword())) {
@@ -84,5 +98,5 @@ public class MainController {
 
         return "redirect:/login";
     }
-
+*/
 }

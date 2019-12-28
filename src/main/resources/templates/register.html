@@ -17,11 +17,18 @@
 
     <div th:if="${user.country.equals(us)}">
         <label>State: </label>
-        <input type="text" th:field="*{state}" minlength="4" maxlength="20" required/><br/><br/>
+        <select th:field="*{state}">
+            <option th:each="stVar : ${statesList}" th:value="${stVar}" th:text="${stVar}"></option>
+        </select>
+        <br/><br/>
     </div>
     <div th:if="${user.country.equals(can)}">
+        <label>Province: </label>
+        <select th:field="*{province}">
+            <option th:each="prov : ${provincesList}" th:value="${prov}" th:text="${prov}"></option>
+        </select>
         <label>City: </label>
-        <input type="text" th:field="*{city}" minlength="4" maxlength="20" required/><br/><br/>
+        <input type="text" th:field="*{city}" minlength="3" maxlength="20" required/><br/><br/>
     </div>
 
     <p th:text="${errMsg}" class="msg"></p><br/><br/>
