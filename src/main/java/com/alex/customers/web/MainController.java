@@ -1,5 +1,6 @@
 package com.alex.customers.web;
 
+import com.alex.customers.model.StateUS;
 import com.alex.customers.model.User;
 import com.alex.customers.model.UserCAN;
 import com.alex.customers.model.UserUS;
@@ -11,9 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/register")
-//@SessionAttributes("user")
+@SessionAttributes("user")
 public class MainController {
     private UserUSRepo userUSRepo;
     private UserCANRepo userCANRepo;
@@ -29,9 +34,11 @@ public class MainController {
 
     @ModelAttribute
     public void addDataToModel(Model model) {
+        List<StateUS> statesList = (ArrayList) stateUSRepo.findAll();
+
         model.addAttribute("us", User.Country.USA);
         model.addAttribute("can", User.Country.CANADA);
-        model.addAttribute("statesList", stateUSRepo.findAll());
+        model.addAttribute("statesList", statesList.stream().map(stateUS -> stateUS.getName()).collect(Collectors.toList()));
         model.addAttribute("provincesList", UserCAN.Province.values());
     }
 
@@ -39,26 +46,27 @@ public class MainController {
     public String countryChoice() {
         return "country";
     }
-/*
-    @GetMapping("/register/{country}")
+
+    @GetMapping("/{country}")
     public String createUser(@PathVariable("country") String country, Model model) {
         if (country.equals("us")) model.addAttribute("user", new UserUS());
         else model.addAttribute("user", new UserCAN());
 
         return "register";
     }
-*/
+
+    /*
 
     @GetMapping("/register/us")
     public String createUserUS(Model model) {
         model.addAttribute("user", new UserUS());
-        return "register";
+        return "registerUS";
     }
 
     @GetMapping("/register/can")
     public String createUserCAN(Model model) {
         model.addAttribute("user", new UserCAN());
-        return "register";
+        return "registerCAN";
     }
 /*
     @PostMapping("/us")

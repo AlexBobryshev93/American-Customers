@@ -34,4 +34,12 @@ public class StateUS {
     public boolean isNeighbor(StateUS state) {
         return neighbors.contains(state) ? true : false;
     }
+
+    @Override
+    public String toString() {
+        return "StateUS{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }
