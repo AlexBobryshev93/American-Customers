@@ -11,7 +11,7 @@ import java.util.Collection;
 
 @MappedSuperclass
 @Data
-public abstract class User implements UserDetails {
+public class User implements UserDetails {
     private String username;
     private String password;
 

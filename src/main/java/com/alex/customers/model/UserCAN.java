@@ -12,6 +12,11 @@ public class UserCAN extends User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String province;
+    private Province province;
     private String city;
+
+    // contractions used (taken from Wikipedia)
+    public enum Province {
+        ON, QC, BC, AB, MB, SK, NS, NB, NL, PE, NT, YT, NU
+    }
 }
