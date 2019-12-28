@@ -3,31 +3,28 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>My Test Assignment</title>
+    <link th:href="@{/style.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
 <h2>Create a new user:</h2>
-<form method="POST" th:if="${user.country.equals(us)}" th:object="${user}">
+<form method="POST" th:object="${user}">
     <label>Username: </label>
     <input type="text" th:field="*{username}" minlength="4" maxlength="20" required/><br/>
     <label>Password: </label>
     <input type="password" th:field="*{password}" minlength="6" maxlength="20" required/><br/>
     <label>Confirm password: </label>
     <input type="password" th:field="*{confirmPassword}" required/><br/>
-    <label th:if="${user.country.equals(us)}">State: </label>
-    <input th:if="${user.country.equals(us)}" type="text" th:field="*{state}" minlength="4" maxlength="20" required/><br/><br/>
-    <i th:text="${errMsg}"></i><br/><br/>
-    <input type="submit" value="REGISTER"/>
-</form>
-<form method="POST" th:if="${user.country.equals(can)}" th:object="${user}">
-    <label>Username: </label>
-    <input type="text" th:field="*{username}" minlength="4" maxlength="20" required/><br/>
-    <label>Password: </label>
-    <input type="password" th:field="*{password}" minlength="6" maxlength="20" required/><br/>
-    <label>Confirm password: </label>
-    <input type="password" th:field="*{confirmPassword}" required/><br/>
-    <label th:if="${user.country.equals(can)}">City: </label>
-    <input th:if="${user.country.equals(can)}" type="text" th:field="*{city}" minlength="4" maxlength="20" required/><br/><br/>
-    <i th:text="${errMsg}"></i><br/><br/>
+
+    <div th:if="${user.country.equals(us)}">
+        <label>State: </label>
+        <input type="text" th:field="*{state}" minlength="4" maxlength="20" required/><br/><br/>
+    </div>
+    <div th:if="${user.country.equals(can)}">
+        <label>City: </label>
+        <input type="text" th:field="*{city}" minlength="4" maxlength="20" required/><br/><br/>
+    </div>
+
+    <p th:text="${errMsg}" class="msg"></p><br/><br/>
     <input type="submit" value="REGISTER"/>
 </form>
 </body>

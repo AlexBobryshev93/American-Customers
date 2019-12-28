@@ -7,10 +7,7 @@
 </head>
 
 <body>
-<form method="POST" th:action="@{/logout}">
-    <input type="submit" value="Log out"/>
-</form>
-<h2>Hello, <span></span>!</h2>
-<th:block th:include="/_footer"></th:block>
+<p class="error">Ooops...Something went wrong</p>
+<a th:href="@{/}">TO THE HOME PAGE</a>
 </body>
 </html>

@@ -16,6 +16,10 @@ public class UserCAN extends User {
     private Province province;
     private String city;
 
+    public UserCAN() {
+        this.setCountry(Country.CANADA);
+    }
+
     // contractions used (taken from Wikipedia)
     public enum Province {
         ON, QC, BC, AB, MB, SK, NS, NB, NL, PE, NT, YT, NU

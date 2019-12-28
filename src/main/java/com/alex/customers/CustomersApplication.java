@@ -41,13 +41,11 @@ public class CustomersApplication {
                 UserUS user1 = new UserUS();
                 user1.setUsername("user1");
                 user1.setPassword(encoder.encode("pass"));
-                user1.setCountry(User.Country.USA);
                 user1.setState(state1);
 
                 UserCAN user2 = new UserCAN();
                 user2.setUsername("user2");
                 user2.setPassword(encoder.encode("pass"));
-                user2.setCountry(User.Country.CANADA);
                 user2.setProvince(UserCAN.Province.ON);
                 user2.setCity("Toronto");
 

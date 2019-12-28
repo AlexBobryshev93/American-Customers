@@ -1,0 +1,22 @@
+.footer-container {
+    text-align: center;
+    margin-top: 100px;
+    padding: 5px 0 0 0;
+    border-top: 1px solid #ccc;
+}
+
+.error {
+    background: dodgerblue;
+    width: 25%;
+    color: black;
+    font-size: 200%;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.msg {
+    color: red;
+    font-style: italic;
+}
+
+

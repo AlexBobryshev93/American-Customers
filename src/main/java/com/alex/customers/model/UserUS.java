@@ -15,4 +15,8 @@ public class UserUS extends User {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "state_id")
     private StateUS state;
+
+    public UserUS() {
+        this.setCountry(Country.USA);
+    }
 }

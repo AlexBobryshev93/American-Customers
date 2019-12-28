@@ -3,6 +3,7 @@ package com.alex.customers.web;
 import com.alex.customers.model.User;
 import com.alex.customers.model.UserCAN;
 import com.alex.customers.model.UserUS;
+import com.alex.customers.repo.StateUSRepo;
 import com.alex.customers.repo.UserCANRepo;
 import com.alex.customers.repo.UserUSRepo;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,11 +17,13 @@ import org.springframework.web.bind.annotation.*;
 public class MainController {
     private UserUSRepo userUSRepo;
     private UserCANRepo userCANRepo;
+    private StateUSRepo stateUSRepo;
     private PasswordEncoder encoder;
 
-    public MainController(UserUSRepo userUSRepo, UserCANRepo userCANRepo, PasswordEncoder encoder) {
+    public MainController(UserUSRepo userUSRepo, UserCANRepo userCANRepo, StateUSRepo stateUSRepo, PasswordEncoder encoder) {
         this.userUSRepo = userUSRepo;
         this.userCANRepo = userCANRepo;
+        this.stateUSRepo = stateUSRepo;
         this.encoder = encoder;
     }
 
@@ -28,22 +31,18 @@ public class MainController {
     public void addDataToModel(Model model) {
         model.addAttribute("us", User.Country.USA);
         model.addAttribute("can", User.Country.CANADA);
+        model.addAttribute("statesList", stateUSRepo.findAll());
     }
 
-    @GetMapping("/us")
-    public String createUserUS(Model model) {
-        User user = new UserUS();
-        user.setCountry(User.Country.USA);
-        model.addAttribute("user", user);
-
-        return "register";
+    @GetMapping
+    public String countryChoice() {
+        return "country";
     }
 
-    @GetMapping("/can")
-    public String createUserCAN(Model model) {
-        User user = new UserCAN();
-        user.setCountry(User.Country.CANADA);
-        model.addAttribute("user", user);
+    @GetMapping("/register/{country}")
+    public String createUser(@PathVariable String country, Model model) {
+        if (country.equals("us")) model.addAttribute("user", new UserUS());
+        else model.addAttribute("user", new UserCAN());
 
         return "register";
     }
