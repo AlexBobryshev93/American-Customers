@@ -25,8 +25,9 @@ public class CustomersApplication {
     public CommandLineRunner dataLoader(UserUSRepo userUSRepo, UserCANRepo userCANRepo, StateUSRepo stateUSRepo) {
         return args -> {
             if (((List) stateUSRepo.findAll()).isEmpty()
-                    && ((List) userUSRepo.findAll()).isEmpty()
-                    && ((List) userCANRepo.findAll()).isEmpty()) {
+                && ((List) userUSRepo.findAll()).isEmpty()
+                && ((List) userCANRepo.findAll()).isEmpty()
+            ) {
                 StateUS state1 = new StateUS("Alabama");
                 StateUS state2 = new StateUS("Georgia");
                 StateUS state3 = new StateUS("Mississippi");
