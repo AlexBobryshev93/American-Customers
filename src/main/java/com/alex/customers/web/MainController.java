@@ -38,7 +38,10 @@ public class MainController {
 
         model.addAttribute("us", User.Country.USA);
         model.addAttribute("can", User.Country.CANADA);
-        model.addAttribute("statesList", statesList.stream().map(stateUS -> stateUS.getName()).collect(Collectors.toList()));
+        model.addAttribute("statesList", statesList
+                .stream()
+                .map(stateUS -> stateUS.getName())
+                .collect(Collectors.toList()));
         model.addAttribute("provincesList", UserCAN.Province.values());
     }
 
@@ -55,20 +58,27 @@ public class MainController {
         return "register";
     }
 
-    /*
-
-    @GetMapping("/register/us")
-    public String createUserUS(Model model) {
-        model.addAttribute("user", new UserUS());
-        return "registerUS";
-    }
-
-    @GetMapping("/register/can")
-    public String createUserCAN(Model model) {
-        model.addAttribute("user", new UserCAN());
-        return "registerCAN";
-    }
 /*
+    @PostMapping("/{country}")
+    public String registerUserUS(@PathVariable("country") String country, @ModelAttribute User user, Model model) {
+        if (!user.getPassword().equals(user.getConfirmPassword())) {
+            model.addAttribute("errMsg", "Error: check your password and try again");
+            return "register";
+        }
+
+        if (userUSRepo.findByUsername(user.getUsername()) != null || userCANRepo.findByUsername(user.getUsername()) != null) {
+            model.addAttribute("errMsg", "Error: user with such name already exists");
+            return "register";
+        }
+
+        user.setPassword(encoder.encode(user.getPassword()));
+
+        if (country.equals("us")) userUSRepo.save((UserUS) user);
+        else userCANRepo.save((UserCAN) user);
+
+        return "redirect:/login";
+    }
+*/
     @PostMapping("/us")
     public String registerUserUS(@ModelAttribute UserUS user, Model model) {
         if (!user.getPassword().equals(user.getConfirmPassword())) {
@@ -83,7 +93,6 @@ public class MainController {
 
         user.setPassword(encoder.encode(user.getPassword()));
         userUSRepo.save(user);
-        //System.out.println(userUSRepo.findByUsername(user.getUsername()));
 
         return "redirect:/login";
     }
@@ -102,9 +111,7 @@ public class MainController {
 
         user.setPassword(encoder.encode(user.getPassword()));
         userCANRepo.save(user);
-        //System.out.println(userCANRepo.findByUsername(user.getUsername()));
 
         return "redirect:/login";
     }
-*/
 }
