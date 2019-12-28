@@ -1,6 +1,5 @@
 package com.alex.customers.web;
 
-import com.alex.customers.model.StateUS;
 import com.alex.customers.model.User;
 import com.alex.customers.model.UserCAN;
 import com.alex.customers.model.UserUS;
@@ -11,10 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/register")
@@ -34,14 +29,9 @@ public class MainController {
 
     @ModelAttribute
     public void addDataToModel(Model model) {
-        List<StateUS> statesList = (ArrayList) stateUSRepo.findAll();
-
         model.addAttribute("us", User.Country.USA);
         model.addAttribute("can", User.Country.CANADA);
-        model.addAttribute("statesList", statesList
-                .stream()
-                .map(stateUS -> stateUS.getName())
-                .collect(Collectors.toList()));
+        model.addAttribute("statesList", stateUSRepo.findAll());
         model.addAttribute("provincesList", UserCAN.Province.values());
     }
 
@@ -58,27 +48,6 @@ public class MainController {
         return "register";
     }
 
-/*
-    @PostMapping("/{country}")
-    public String registerUserUS(@PathVariable("country") String country, @ModelAttribute User user, Model model) {
-        if (!user.getPassword().equals(user.getConfirmPassword())) {
-            model.addAttribute("errMsg", "Error: check your password and try again");
-            return "register";
-        }
-
-        if (userUSRepo.findByUsername(user.getUsername()) != null || userCANRepo.findByUsername(user.getUsername()) != null) {
-            model.addAttribute("errMsg", "Error: user with such name already exists");
-            return "register";
-        }
-
-        user.setPassword(encoder.encode(user.getPassword()));
-
-        if (country.equals("us")) userUSRepo.save((UserUS) user);
-        else userCANRepo.save((UserCAN) user);
-
-        return "redirect:/login";
-    }
-*/
     @PostMapping("/us")
     public String registerUserUS(@ModelAttribute UserUS user, Model model) {
         if (!user.getPassword().equals(user.getConfirmPassword())) {
@@ -92,6 +61,7 @@ public class MainController {
         }
 
         user.setPassword(encoder.encode(user.getPassword()));
+        user.setState(stateUSRepo.findByName(user.getStateName()));
         userUSRepo.save(user);
 
         return "redirect:/login";
@@ -114,4 +84,30 @@ public class MainController {
 
         return "redirect:/login";
     }
+
+    /*
+    @PostMapping("/{country}")
+    public String registerUserUS(@PathVariable("country") String country, @ModelAttribute User user, Model model) {
+        if (!user.getPassword().equals(user.getConfirmPassword())) {
+            model.addAttribute("errMsg", "Error: check your password and try again");
+            return "register";
+        }
+
+        if (userUSRepo.findByUsername(user.getUsername()) != null || userCANRepo.findByUsername(user.getUsername()) != null) {
+            model.addAttribute("errMsg", "Error: user with such name already exists");
+            return "register";
+        }
+
+        user.setPassword(encoder.encode(user.getPassword()));
+
+        if (country.equals("us")) {
+            UserUS usr = (UserUS) user;
+            usr.setState(stateUSRepo.findByName(usr.getStateName()));
+            userUSRepo.save(usr);
+        }
+        else userCANRepo.save((UserCAN) user);
+
+        return "redirect:/login";
+    }
+*/
 }

@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StateUSRepo extends CrudRepository<StateUS, Integer> {
+    StateUS findByName(String name);
 }

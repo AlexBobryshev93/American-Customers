@@ -16,6 +16,9 @@ public class UserUS extends User {
     @JoinColumn(name = "state_id")
     private StateUS state;
 
+    @Transient
+    private String stateName; // for registration form only
+
     public UserUS() {
         this.setCountry(Country.USA);
     }

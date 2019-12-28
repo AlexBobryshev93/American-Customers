@@ -17,8 +17,8 @@
 
     <div th:if="${user.country.equals(us)}">
         <label>State: </label>
-        <select th:field="*{state}">
-            <option th:each="stVar : ${statesList}" th:value="${stVar}" th:text="${stVar}"></option>
+        <select th:field="*{stateName}">
+            <option th:each="state : ${statesList}" th:value="${state.name}" th:text="${state.name}"></option>
         </select>
         <br/>
     </div>
