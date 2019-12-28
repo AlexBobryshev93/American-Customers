@@ -12,6 +12,7 @@ public class UserCAN extends User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     private Province province;
     private String city;
 

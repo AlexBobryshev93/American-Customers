@@ -3,7 +3,6 @@ package com.alex.customers.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "users_usa")
@@ -13,6 +12,7 @@ public class UserUS extends User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String state;
-    //private List<String> neighborStates;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "state_id")
+    private StateUS state;
 }

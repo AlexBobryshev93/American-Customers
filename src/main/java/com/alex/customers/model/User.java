@@ -17,6 +17,7 @@ public class User implements UserDetails {
 
     @Transient
     private String confirmPassword;
+    @Enumerated(EnumType.STRING)
     private Country country;
 
     private boolean accountNonExpired = true;
