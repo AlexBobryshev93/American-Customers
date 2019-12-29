@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>My Test Assignment</title>
     <link th:href="@{/style.css}" rel="stylesheet" type="text/css">
@@ -10,6 +10,9 @@
 <form method="POST" th:action="@{/logout}">
     <input type="submit" value="Log out"/>
 </form>
-<h2>Hello, <span></span>!</h2>
+<h2>Hello, <span sec:authentication="name"></span>!</h2>
+<a th:href="@{/profile}">(view profile)</a>
+
+<th:block th:include="/_footer"></th:block>
 </body>
 </html>

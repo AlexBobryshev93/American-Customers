@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Test Assignment</title>
+    <link th:href="@{/style.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<p>Username: <span th:text="${user.username}"></span></p>
+<p>Country: <span th:text="${user.country.toString()}"></span></p>
+
+<div th:if="${user.country.equals(us)}">
+    <p>State: <span th:text="${user.state.name}"></span></p>
+</div>
+<div th:if="${user.country.equals(can)}">
+    <p>Province: <span th:text="${user.province.toString()}"></span></p>
+    <p>City: <span th:text="${user.city}"></span></p>
+</div>
+
+<form method="POST" th:action="@{/logout}">
+    <input type="submit" value="Log out"/>
+</form>
+<br/><br/>
+
+<a th:href="@{/}">back to the home page</a>
+<th:block th:include="/_footer"></th:block>
+</body>
+</html>

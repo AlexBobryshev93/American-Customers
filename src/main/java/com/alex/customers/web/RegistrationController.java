@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("/register")
 @SessionAttributes("user")
-public class MainController {
+public class RegistrationController {
     private UserUSRepo userUSRepo;
     private UserCANRepo userCANRepo;
     private StateUSRepo stateUSRepo;
     private PasswordEncoder encoder;
 
-    public MainController(UserUSRepo userUSRepo, UserCANRepo userCANRepo, StateUSRepo stateUSRepo, PasswordEncoder encoder) {
+    public RegistrationController(UserUSRepo userUSRepo, UserCANRepo userCANRepo, StateUSRepo stateUSRepo, PasswordEncoder encoder) {
         this.userUSRepo = userUSRepo;
         this.userCANRepo = userCANRepo;
         this.stateUSRepo = stateUSRepo;

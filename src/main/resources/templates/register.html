@@ -5,6 +5,7 @@
     <title>My Test Assignment</title>
     <link th:href="@{/style.css}" rel="stylesheet" type="text/css">
 </head>
+
 <body>
 <h2>Create a new user:</h2>
 <form method="POST" th:object="${user}">
@@ -35,6 +36,8 @@
     <p th:text="${errMsg}" class="msg"></p><br/>
     <input type="submit" value="REGISTER"/>
 </form>
+
 <h2>click <a th:href="@{/register}">here</a> to choose your country once again</h2>
+<th:block th:include="/_footer"></th:block>
 </body>
 </html>
