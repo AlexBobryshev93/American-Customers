@@ -12,7 +12,7 @@ public class UserUS extends User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "state_id")
     private StateUS state;
 
@@ -20,6 +20,16 @@ public class UserUS extends User {
     private String stateName; // for registration form only
 
     public UserUS() {
+        this.setCountry(Country.USA);
+    }
+
+    // used for update
+    public UserUS(User user) {
+        if (user instanceof UserUS) this.id = ((UserUS) user).getId();
+        else if (user instanceof UserCAN) this.id = ((UserCAN) user).getId();
+
+        this.setUsername(user.getUsername());
+        this.setPassword(user.getPassword());
         this.setCountry(Country.USA);
     }
 }

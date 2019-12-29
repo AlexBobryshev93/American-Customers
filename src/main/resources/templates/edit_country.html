@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <title>My Test Assignment</title>
+    <link th:href="@{/style.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h2>Where are you from?</span></h2>
+<a th:href="@{/profile/edit/us}">USA</a>
+<br/>
+<a th:href="@{/profile/edit/can}">CANADA</a>
+<br/><br/>
+
+<a th:href="@{/}">back to the home page</a>
+<th:block th:include="/_footer"></th:block>
+</body>
+</html>

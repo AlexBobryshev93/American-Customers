@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Test Assignment</title>
+    <link th:href="@{/style.css}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h2>Edit user:</h2>
+<form method="POST" th:object="${user}">
+    <label>Username: </label>
+    <input type="text" th:field="*{username}" minlength="4" maxlength="20" required/><br/>
+    <label>Password: </label>
+    <input type="password" th:field="*{password}" minlength="6" maxlength="20" required/><br/>
+    <label>Confirm password: </label>
+    <input type="password" th:field="*{confirmPassword}" required/><br/>
+
+    <div th:if="${user.country.equals(us)}">
+        <label>State: </label>
+        <select th:field="*{stateName}">
+            <option th:each="state : ${statesList}" th:value="${state.name}" th:text="${state.name}"></option>
+        </select>
+        <br/>
+    </div>
+    <div th:if="${user.country.equals(can)}">
+        <label>Province: </label>
+        <select th:field="*{province}">
+            <option th:each="prov : ${provincesList}" th:value="${prov}" th:text="${prov}"></option>
+        </select>
+        <br/>
+        <label>City: </label>
+        <input type="text" th:field="*{city}" minlength="3" maxlength="20" required/><br/>
+    </div>
+
+    <p th:text="${errMsg}" class="msg"></p><br/>
+    <input type="submit" value="REGISTER"/>
+</form>
+
+<h2>click <a th:href="@{/profile/edit}">here</a> to choose your country once again</h2>
+<th:block th:include="/_footer"></th:block>
+</body>
+</html>
