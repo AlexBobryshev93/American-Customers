@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import javax.transaction.Transactional;
+
 @Controller
 @RequestMapping("/profile")
 @SessionAttributes("user")
@@ -46,5 +48,16 @@ public class ProfileController {
     @GetMapping
     public String showProfile() {
         return "profile";
+    }
+
+    @GetMapping("/delete")
+    @Transactional
+    public String deleteProfile() {
+        String username = ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+
+        if(userUSRepo.deleteByUsername(username) != 1) userCANRepo.deleteByUsername(username);
+
+        return "redirect:/login";
     }
 }
