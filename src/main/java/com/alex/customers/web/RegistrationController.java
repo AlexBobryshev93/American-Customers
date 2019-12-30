@@ -84,30 +84,4 @@ public class RegistrationController {
 
         return "redirect:/login";
     }
-
-    /*
-    @PostMapping("/{country}")
-    public String registerUserUS(@PathVariable("country") String country, @ModelAttribute User user, Model model) {
-        if (!user.getPassword().equals(user.getConfirmPassword())) {
-            model.addAttribute("errMsg", "Error: check your password and try again");
-            return "register";
-        }
-
-        if (userUSRepo.findByUsername(user.getUsername()) != null || userCANRepo.findByUsername(user.getUsername()) != null) {
-            model.addAttribute("errMsg", "Error: user with such name already exists");
-            return "register";
-        }
-
-        user.setPassword(encoder.encode(user.getPassword()));
-
-        if (country.equals("us")) {
-            UserUS usr = (UserUS) user;
-            usr.setState(stateUSRepo.findByName(usr.getStateName()));
-            userUSRepo.save(usr);
-        }
-        else userCANRepo.save((UserCAN) user);
-
-        return "redirect:/login";
-    }
-*/
 }
