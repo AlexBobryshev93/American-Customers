@@ -45,6 +45,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login")
             .and()
                 .csrf()
-                    .ignoringAntMatchers("/register", "/register/*");
+                    .ignoringAntMatchers("/register", "/register/*", "/profile/edit/*");
     }
 }
