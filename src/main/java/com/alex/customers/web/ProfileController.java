@@ -31,12 +31,6 @@ public class ProfileController {
 
     @ModelAttribute
     public void addDataToModel(Model model) {
-        UserUS userUS = userUSRepo.findByUsername(getCurrentUserUsername());
-
-        if (userUS != null) {
-            model.addAttribute("user", userUS);
-        } else model.addAttribute("user", userCANRepo.findByUsername(getCurrentUserUsername()));
-
         model.addAttribute("us", User.Country.USA);
         model.addAttribute("can", User.Country.CANADA);
         model.addAttribute("statesList", stateUSRepo.findAll());
@@ -44,7 +38,13 @@ public class ProfileController {
     }
 
     @GetMapping
-    public String showProfile() {
+    public String showProfile(Model model) {
+        UserUS userUS = userUSRepo.findByUsername(getCurrentUserUsername());
+
+        if (userUS != null) {
+            model.addAttribute("user", userUS);
+        } else model.addAttribute("user", userCANRepo.findByUsername(getCurrentUserUsername()));
+
         return "profile";
     }
 
@@ -83,23 +83,22 @@ public class ProfileController {
     @PostMapping("/edit/us")
     @Transactional
     public String updateUserUS(@ModelAttribute UserUS user, Model model) {
-        if (!user.getPassword().equals(user.getConfirmPassword())) {
-            model.addAttribute("errMsg", "Error: check your password and try again");
-            return "edit_user";
-        }
-
         String editedUserUsername = getCurrentUserUsername();
-
         UserUS userUS = userUSRepo.findByUsername(user.getUsername());
         UserCAN userCAN = userCANRepo.findByUsername(user.getUsername());
 
-        System.out.println(userUS);
-        System.out.println(userCAN);
-        System.out.println(editedUserUsername);
+        if (!user.getPassword().equals(user.getConfirmPassword())) {
+            model.addAttribute("errMsg", "Error: check your password and try again");
+            if (userUS != null) model.addAttribute("user", new UserUS(userUS));
+            else model.addAttribute("user", new UserUS(userCAN));
+            return "edit_user";
+        }
 
         // same names but different IDs means error
         if (((userUS != null) || (userCAN != null)) && !user.getUsername().equals(editedUserUsername)) {
             model.addAttribute("errMsg", "Error: user with such name already exists");
+            if (userUS != null) model.addAttribute("user", new UserUS(userUS));
+            else model.addAttribute("user", new UserUS(userCAN));
             return "edit_user";
         }
 
@@ -117,23 +116,22 @@ public class ProfileController {
     @PostMapping("/edit/can")
     @Transactional
     public String updateUserCAN(@ModelAttribute UserCAN user, Model model) {
-        if (!user.getPassword().equals(user.getConfirmPassword())) {
-            model.addAttribute("errMsg", "Error: check your password and try again");
-            return "edit_user";
-        }
-
         String editedUserUsername = getCurrentUserUsername();
-
         UserUS userUS = userUSRepo.findByUsername(user.getUsername());
         UserCAN userCAN = userCANRepo.findByUsername(user.getUsername());
 
-        System.out.println(userUS);
-        System.out.println(userCAN);
-        System.out.println(editedUserUsername);
+        if (!user.getPassword().equals(user.getConfirmPassword())) {
+            model.addAttribute("errMsg", "Error: check your password and try again");
+            if (userUS != null) model.addAttribute("user", new UserCAN(userUS));
+            else model.addAttribute("user", new UserCAN(userCAN));
+            return "edit_user";
+        }
 
         // same names but different IDs means error
         if (((userUS != null) || (userCAN != null)) && !user.getUsername().equals(editedUserUsername)) {
             model.addAttribute("errMsg", "Error: user with such name already exists");
+            if (userUS != null) model.addAttribute("user", new UserCAN(userUS));
+            else model.addAttribute("user", new UserCAN(userCAN));
             return "edit_user";
         }
 
